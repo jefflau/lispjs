@@ -1,0 +1,6 @@
+.DS_Store
+.floo
+.idea
+node_modules
+lib
+.flooignore
