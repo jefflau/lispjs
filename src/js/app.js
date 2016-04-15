@@ -1,6 +1,6 @@
 import "babel-polyfill";
 
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
 import { createStore } from 'redux';
@@ -30,6 +30,49 @@ class Knight extends Component {
   }
 }
 
+class Square extends Component {
+
+  static propTypes = {
+    black: PropTypes.bool
+  };
+
+  render(){
+    const { black } = this.props;
+    const fill = black ? 'black' : 'white';
+    const stroke = black ? 'white' : 'black';
+
+    return (
+        <div style={{ 
+          backgroundColor: fill,
+          color: stroke, 
+          width: '100%', 
+          height: '100%'}} >
+
+          {this.props.children}
+
+          </div>
+        );
+  }
+}
+
+class Board extends Component {
+  static propTypes = {
+    knightPosition: PropTypes.arrayOf(
+      PropTypes.number.isRequired
+      ).isRequired
+  };
+
+  render() {
+    return (
+      <div>
+        <Square black>
+          <Knight />
+        </Square>
+      </div>
+        )
+  }
+}
+
 @Radium
 class App extends Component {
   render() {
@@ -52,9 +95,9 @@ const Counter = ({ value, increment, decrement }) => (<div>
 
 const render = () => {
   ReactDOM.render(
-    <Knight />,
-    document.getElementById('main')
-  );
+      <Board knightPosition={[0, 0]} />,
+      document.getElementById('main')
+      );
 }
 
 store.subscribe(render);
