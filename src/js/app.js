@@ -1,6 +1,6 @@
 import "babel-polyfill";
 
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
 import { createStore } from 'redux';
@@ -8,6 +8,7 @@ import "../lib/tests";
 
 // import { Nav } from './components/nav';
 
+const monolith = 0; 
 
 const store = createStore((state = 0, action)=>{
   switch(action.type){
@@ -23,8 +24,14 @@ const store = createStore((state = 0, action)=>{
   }
 })
 
+class Knight extends Component {
+  render(){
+    return <span>♘</span>
+  }
+}
+
 @Radium
-class App extends React.Component {
+class App extends Component {
   render() {
     return (
       <Counter 
@@ -45,7 +52,7 @@ const Counter = ({ value, increment, decrement }) => (<div>
 
 const render = () => {
   ReactDOM.render(
-    <App />,
+    <Knight />,
     document.getElementById('main')
   );
 }
