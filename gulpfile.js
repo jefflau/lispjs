@@ -62,7 +62,7 @@ gulp.task('html', function () {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('src/stylus/**/*.styl', ['stylus']);
+  gulp.watch('src/styl/**/*.styl', ['stylus']);
   gulp.watch('src/index.html', ['html']);
   gulp.watch('dist/index.html').on('change', browserSync.reload);
   gulp.watch('dist/bundle.js').on('change', browserSync.reload);
