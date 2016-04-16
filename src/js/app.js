@@ -8,7 +8,7 @@ import { createStore } from 'redux';
 import "../lib/tests";
 import blockchain from "./blockchain";
 
-blockchain();
+//blockchain();
 
 const monolith = 0; 
 
@@ -91,6 +91,21 @@ const Counter = ({ value, increment, decrement }) => (<div>
   </div>
 )
 
+function renderSquare(x, y) {
+  const black = (x + y) % 2 === 1;
+
+  const [knightX, knightY] = this.props.knightPosition;
+  const piece = ( x === knightX && y === knightY) ? 
+    <Knight /> : 
+    null; 
+
+  return (
+      <Square black={black}>
+      {piece}
+      </Square>
+      );
+}
+
 const render = () => {
   ReactDOM.render(
       <Board knightPosition={[0, 0]} />,
@@ -101,3 +116,6 @@ const render = () => {
 store.subscribe(render);
 
 render();
+
+
+
