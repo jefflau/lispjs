@@ -48,7 +48,7 @@ function bundle() {
 
 
 gulp.task('stylus', function () {
-  return gulp.src('./src/stylus/app.styl')
+  return gulp.src('./src/styl/app.styl')
     .pipe(stylus({
       use: [autoprefixer('iOS >= 7', 'last 1 Chrome version')]
     }))

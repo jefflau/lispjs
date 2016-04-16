@@ -4,20 +4,20 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
 import { createStore } from 'redux';
-import "../lib/tests";
 
-// import { Nav } from './components/nav';
+import "../lib/tests";
+import blockchain from "./blockchain";
+
+blockchain();
 
 const monolith = 0; 
 
-const store = createStore((state = 0, action)=>{
+const store = createStore((state = {}, action)=>{
   switch(action.type){
-    case "INCREMENT":
-      console.log('incremting in store')
-      return state + 1;
-    break;
-    case "DECREMENT":
-      return state - 1;
+    case "currentBlock":
+      return Object.assign({}, state, {
+        currentBlock: action.currentBlock
+      });
     break;
     default:
       return state;
@@ -78,9 +78,7 @@ class App extends Component {
   render() {
     return (
       <Counter 
-        value={store.getState()} 
-        increment={ () => store.dispatch({type: "INCREMENT"}) }
-        decrement={ () => store.dispatch({type: "DECREMENT"}) }
+        value={store.getState().currentBlock} 
       />
     )
   }
