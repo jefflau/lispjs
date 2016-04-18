@@ -4,20 +4,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
 import { createStore } from 'redux';
-import { Provider } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 
 import "../lib/tests";
-import blockchain from "./blockchain";
+// import blockchain from "./blockchain";
 
-blockchain();
+// blockchain();
 
 
-const state = createStore((state = 0, action)=>{
+const store = createStore((state = 0, action)=>{
   switch(action.type){
     case "INCREMENT":
-      return state ++;
+      return state + 1;
     case "DECREMENT":
-      return state --;
+      return state - 1;
     default:
       return state;
   }
@@ -27,9 +27,7 @@ const state = createStore((state = 0, action)=>{
 class App extends React.Component {
   render() {
     return (
-      <Counter 
-        value={store.getState().currentBlock} 
-      />
+      <CounterWithStore />
     )
   }
 }
@@ -41,13 +39,31 @@ const Counter = ({ value, increment, decrement }) => (<div>
   </div>
 )
 
+function mapStateToProps(state){
+  return {
+    value: state
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return {
+    increment: ()=>{
+      dispatch({type: "INCREMENT"})
+    },
+    decrement: ()=>{
+      dispatch({type: "DECREMENT"})
+    }
+  }
+}
+
+const CounterWithStore = connect(mapStateToProps, mapDispatchToProps)(Counter)
+
 const render = () => {
   ReactDOM.render(
-    <Provider><App /></Provider>,
+    <Provider store={store}><App /></Provider>,
     document.getElementById('main')
   );
 }
 
-store.subscribe(render);
 
 render();
