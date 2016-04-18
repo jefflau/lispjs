@@ -49,9 +49,11 @@ function bundle() {
 
 gulp.task('stylus', function () {
   return gulp.src('./src/styl/app.styl')
+    .pipe(plumber())
     .pipe(stylus({
       use: [autoprefixer('iOS >= 7', 'last 1 Chrome version')]
     }))
+    .pipe(plumber.stop())
     .pipe(gulp.dest('./dist/css'))
     .pipe(browserSync.stream());
 });
