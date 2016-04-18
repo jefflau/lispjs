@@ -10,7 +10,8 @@ var gulp = require('gulp'),
     stylus = require('gulp-stylus'),
     autoprefixer = require('autoprefixer-stylus'),
     del = require('del'),
-    browserSync = require('browser-sync');
+    browserSync = require('browser-sync'),
+    plumber = require('gulp-plumber');
 
 /*
   Babel/React/Browserify/Watchify Compilation

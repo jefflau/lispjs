@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
 import { createStore } from 'redux';
+import { Provider } from 'react-redux';
 
 import "../lib/tests";
 import blockchain from "./blockchain";
@@ -11,13 +12,12 @@ import blockchain from "./blockchain";
 blockchain();
 
 
-const store = createStore((state = {}, action)=>{
+const state = createStore((state = 0, action)=>{
   switch(action.type){
-    case "currentBlock":
-      return Object.assign({}, state, {
-        currentBlock: action.currentBlock
-      });
-    break;
+    case "INCREMENT":
+      return state ++;
+    case "DECREMENT":
+      return state --;
     default:
       return state;
   }
@@ -43,7 +43,7 @@ const Counter = ({ value, increment, decrement }) => (<div>
 
 const render = () => {
   ReactDOM.render(
-    <App />,
+    <Provider><App /></Provider>,
     document.getElementById('main')
   );
 }
