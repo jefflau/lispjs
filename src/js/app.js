@@ -58,57 +58,52 @@ class Square extends Component {
 class Board extends Component {
   static propTypes = {
     knightPosition: PropTypes.arrayOf(
-      PropTypes.number.isRequired
-      ).isRequired
+                        PropTypes.number.isRequired
+                        ).isRequired
   };
 
-  render() {
+  renderSquare(i) {
+    const x = i % 8
+    const y = Math.floor( i / 8 )
+    const black = (x + y) % 2 === 1;
+
+    const [knightX, knightY] = this.props.knightPosition;
+    const piece = ( x === knightX && y === knightY) ? 
+      <Knight /> : 
+      null; 
+
     return (
-      <div>
-        <Square black>
-          <Knight />
+        <div key={i}
+             style={{width: '12.5%', height: '12.5%'}}> 
+        <Square black={black}>
+        {piece}
         </Square>
-      </div>
+        </div>
+        );
+  }
+
+  render() {
+    const squares = [];
+    for (let i = 0; i < 64; i++){
+      squares.push(this.renderSquare(i));
+  }
+
+    return (
+        <div style={{
+          width: '100%',
+          height: '100%',
+          display: 'flex', 
+          flexWrap: 'wrap'
+        }}>
+        {squares}
+        </div>
         )
   }
 }
 
-@Radium
-class App extends Component {
-  render() {
-    return (
-      <Counter 
-        value={store.getState().currentBlock} 
-      />
-    )
-  }
-}
-
-const Counter = ({ value, increment, decrement }) => (<div>
-    {value}
-    <button onClick={increment}>+</button>
-    <button onClick={decrement}>-</button>
-  </div>
-)
-
-function renderSquare(x, y) {
-  const black = (x + y) % 2 === 1;
-
-  const [knightX, knightY] = this.props.knightPosition;
-  const piece = ( x === knightX && y === knightY) ? 
-    <Knight /> : 
-    null; 
-
-  return (
-      <Square black={black}>
-      {piece}
-      </Square>
-      );
-}
-
 const render = () => {
   ReactDOM.render(
-      <Board knightPosition={[0, 0]} />,
+      <Board knightPosition={[4, 7]} />,
       document.getElementById('main')
       );
 }
