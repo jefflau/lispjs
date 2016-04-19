@@ -10,7 +10,8 @@ var gulp = require('gulp'),
     stylus = require('gulp-stylus'),
     autoprefixer = require('autoprefixer-stylus'),
     del = require('del'),
-    browserSync = require('browser-sync');
+    browserSync = require('browser-sync'),
+    plumber = require('gulp-plumber');
 
 /*
   Babel/React/Browserify/Watchify Compilation
@@ -49,9 +50,11 @@ function bundle() {
 
 gulp.task('stylus', function () {
   return gulp.src('./src/styl/app.styl')
+    .pipe(plumber())
     .pipe(stylus({
       use: [autoprefixer('iOS >= 7', 'last 1 Chrome version')]
     }))
+    .pipe(plumber.stop())
     .pipe(gulp.dest('./dist/css'))
     .pipe(browserSync.stream());
 });
@@ -62,7 +65,7 @@ gulp.task('html', function () {
 });
 
 gulp.task('watch', function() {
-  gulp.watch('src/stylus/**/*.styl', ['stylus']);
+  gulp.watch('src/styl/**/*.styl', ['stylus']);
   gulp.watch('src/index.html', ['html']);
   gulp.watch('dist/index.html').on('change', browserSync.reload);
   gulp.watch('dist/bundle.js').on('change', browserSync.reload);
