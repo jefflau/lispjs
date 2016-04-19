@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import Radium from 'radium';
 import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
+import Immutable, { Map } from 'immutable';
 
 import "../lib/tests";
 import blockchain from "./blockchain";
@@ -12,18 +13,17 @@ import { boardRender } from "./dnd"
 
 //blockchain();
 
-const monolith = 0;
-
-const store = createStore((state = 0, action)=>{
-  switch(action.type){
-    case "INCREMENT":
-      return state + 1;
-    case "DECREMENT":
-      return state - 1;
-    default:
-      return state;
-  }}
-    )
+const store = createStore((state = Map({clicks: 0}), action)=>{
+      switch(action.type){
+        case "INCREMENT":
+          return state.updateIn(['clicks'], value => value + 1);
+        case "DECREMENT":
+          return state.updateIn(['clicks'], value => value - 1);
+        default:
+          return state;
+      }
+    }
+)
 
 @Radium
 class App extends React.Component {
@@ -43,7 +43,7 @@ const Counter = ({ value, increment, decrement }) => (<div>
 
 function mapStateToProps(state){
   return {
-    value: state
+    value: state.get('clicks')
   }
 }
 

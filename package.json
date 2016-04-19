@@ -27,6 +27,7 @@
     "gulp-sourcemaps": "^1.6.0",
     "gulp-stylus": "^2.3.1",
     "gulp-util": "^3.0.7",
+    "immutable": "^3.8.1",
     "lodash.assign": "^4.0.6",
     "radium": "^0.16.6",
     "react": "^0.14.7",
